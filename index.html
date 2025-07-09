@@ -1,20 +1,23 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
-    <!-- Add this above your "digital innovation..." heading -->
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>H3RO | Digital Innovation Studio</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
         * {
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        body {
+            scroll-behavior: smooth;
+            overflow-x: hidden;
         }
         .hero-gradient {
-            background: linear-gradient(120deg, #0f0e15 0%, #1f1724 100%);
+            background: linear-gradient(135deg, #0a0a12 0%, #1a1120 100%);
         }
         .text-gradient {
             background: linear-gradient(90deg, #9f7aea 0%, #ec4899 100%);
@@ -29,22 +32,77 @@
             color: transparent;
         }
         .card-hover {
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
         .card-hover:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
         }
         .fade-in {
             opacity: 0;
-            transition: opacity 0.6s ease-out;
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+            transform: translateY(20px);
         }
         .fade-in.appear {
             opacity: 1;
+            transform: translateY(0);
+        }
+        .slide-in-left {
+            opacity: 0;
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+            transform: translateX(-50px);
+        }
+        .slide-in-left.appear {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        .slide-in-right {
+            opacity: 0;
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+            transform: translateX(50px);
+        }
+        .slide-in-right.appear {
+            opacity: 1;
+            transform: translateX(0);
         }
         .bg-clip-text {
             -webkit-background-clip: text;
             background-clip: text;
+        }
+        .glow-on-hover {
+            transition: box-shadow 0.3s ease;
+        }
+        .glow-on-hover:hover {
+            box-shadow: 0 0 15px rgba(159, 122, 234, 0.6);
+        }
+        .gradient-border {
+            position: relative;
+            background: transparent;
+            border-radius: 1rem;
+        }
+        .gradient-border::before {
+            content: "";
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            z-index: -1;
+            background: linear-gradient(45deg, #3b82f6, #ec4899, #10b981);
+            border-radius: 1rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .gradient-border:hover::before {
+            opacity: 1;
+        }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
         }
         @keyframes blob {
             0% { transform: translate(0px, 0px) scale(1); }
@@ -61,34 +119,63 @@
         .animation-delay-4000 {
             animation-delay: 4s;
         }
+        .parallax-bg {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        .glass-effect {
+            background: rgba(15, 14, 21, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .text-secondary {
+            font-family: 'Inter', sans-serif;
+        }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800 dark:bg-gray-900 dark:text-gray-100 transition-colors duration-300">
     <!-- Navigation Bar -->
-    <nav class="fixed top-0 left-0 right-0 z-50 bg-gray-900 bg-opacity-40 backdrop-filter backdrop-blur-lg px-4 py-3 flex justify-between items-center">
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-gray-900/40 glass-effect px-6 py-4 flex justify-between items-center">
         <div class="flex items-center">
-            <span class="text-2xl font-bold bg-gradient-to-r from-blue-400 to-cyan-300 bg-clip-text text-transparent">
+            <span class="text-2xl font-bold bg-gradient-to-r from-blue-400 to-cyan-300 bg-clip-text text-transparent tracking-tighter">
                 H3RO
             </span>
         </div>
         
         <!-- Desktop Navigation Links -->
-        <div class="hidden md:flex space-x-6">
-            <a href="#home" class="text-gray-200 hover:text-purple-400 transition text-sm md:text-base" data-translate="nav-home">Home</a>
-            <a href="#why" class="text-gray-200 hover:text-purple-400 transition text-sm md:text-base" data-translate="nav-why">Why Choose Us</a>
-            <a href="#services" class="text-gray-200 hover:text-purple-400 transition text-sm md:text-base" data-translate="nav-services">Services</a>
-            <a href="#portfolio" class="text-gray-200 hover:text-purple-400 transition text-sm md:text-base" data-translate="nav-portfolio">Portfolio</a>
-            <a href="#contact" class="text-gray-200 hover:text-purple-400 transition text-sm md:text-base" data-translate="nav-contact">Contact</a>
+        <div class="hidden md:flex space-x-8">
+            <a href="#home" class="relative text-gray-200 hover:text-purple-400 transition-all duration-300 text-sm md:text-base group" data-translate="nav-home">
+                <span>Home</span>
+                <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-purple-400 transition-all duration-300 group-hover:w-full"></span>
+            </a>
+            <a href="#why" class="relative text-gray-200 hover:text-purple-400 transition-all duration-300 text-sm md:text-base group" data-translate="nav-why">
+                <span>Why Choose Us</span>
+                <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-purple-400 transition-all duration-300 group-hover:w-full"></span>
+            </a>
+            <a href="#services" class="relative text-gray-200 hover:text-purple-400 transition-all duration-300 text-sm md:text-base group" data-translate="nav-services">
+                <span>Services</span>
+                <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-purple-400 transition-all duration-300 group-hover:w-full"></span>
+            </a>
+            <a href="#portfolio" class="relative text-gray-200 hover:text-purple-400 transition-all duration-300 text-sm md:text-base group" data-translate="nav-portfolio">
+                <span>Portfolio</span>
+                <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-purple-400 transition-all duration-300 group-hover:w-full"></span>
+            </a>
+            <a href="#contact" class="relative text-gray-200 hover:text-purple-400 transition-all duration-300 text-sm md:text-base group" data-translate="nav-contact">
+                <span>Contact</span>
+                <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-purple-400 transition-all duration-300 group-hover:w-full"></span>
+            </a>
         </div>
         
         <!-- Mobile Menu Button & Language Toggle -->
-        <div class="flex items-center space-x-4">
-            <button id="languageToggle" class="bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-200 px-3 py-1 rounded-full text-xs font-medium flex items-center space-x-1">
+        <div class="flex items-center space-x-6">
+            <button id="languageToggle" class="bg-gray-200/10 dark:bg-gray-800/50 text-gray-200 dark:text-gray-200 px-4 py-1.5 rounded-full text-xs font-medium flex items-center space-x-2 border border-gray-700 hover:bg-gray-700/30 transition-all">
                 <span id="currentLang">EN</span>
                 <i class="fas fa-globe text-xs"></i>
             </button>
-            <button id="mobileMenuButton" class="md:hidden p-2 rounded-md text-gray-200 focus:outline-none">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <button id="mobileMenuButton" class="md:hidden p-2 rounded-md text-gray-200 focus:outline-none hover:bg-gray-700/30 transition-all">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
                 </svg>
             </button>
@@ -96,63 +183,68 @@
     </nav>
 
     <!-- Mobile Menu -->
-    <div id="mobileMenu" class="fixed inset-0 bg-gray-900 bg-opacity-90 z-40 flex flex-col items-center justify-center hidden">
-        <div class="absolute top-6 left-6">
+    <div id="mobileMenu" class="fixed inset-0 bg-gray-900/95 z-40 flex flex-col items-center justify-center hidden glass-effect">
+        <div class="absolute top-8 left-8">
             <span class="text-2xl font-bold bg-gradient-to-r from-blue-400 to-cyan-300 bg-clip-text text-transparent">
                 H3RO
             </span>
         </div>
-        <button id="closeMobileMenu" class="absolute top-6 right-6 text-gray-200">
+        <button id="closeMobileMenu" class="absolute top-8 right-8 text-gray-200 hover:text-purple-400 transition-all">
             <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
             </svg>
         </button>
-        <nav class="flex flex-col items-center space-y-6">
-            <a href="#home" class="text-xl text-gray-200 hover:text-purple-400 transition" data-translate="nav-home">Home</a>
-            <a href="#why" class="text-xl text-gray-200 hover:text-purple-400 transition" data-translate="nav-why">Why Choose Us</a>
-            <a href="#services" class="text-xl text-gray-200 hover:text-purple-400 transition" data-translate="nav-services">Services</a>
-            <a href="#portfolio" class="text-xl text-gray-200 hover:text-purple-400 transition" data-translate="nav-portfolio">Portfolio</a>
-            <a href="#contact" class="text-xl text-gray-200 hover:text-purple-400 transition" data-translate="nav-contact">Contact</a>
+        <nav class="flex flex-col items-center space-y-8">
+            <a href="#home" class="text-2xl text-gray-200 hover:text-purple-400 transition-all px-4 py-2" data-translate="nav-home">Home</a>
+            <a href="#why" class="text-2xl text-gray-200 hover:text-purple-400 transition-all px-4 py-2" data-translate="nav-why">Why Choose Us</a>
+            <a href="#services" class="text-2xl text-gray-200 hover:text-purple-400 transition-all px-4 py-2" data-translate="nav-services">Services</a>
+            <a href="#portfolio" class="text-2xl text-gray-200 hover:text-purple-400 transition-all px-4 py-2" data-translate="nav-portfolio">Portfolio</a>
+            <a href="#contact" class="text-2xl text-gray-200 hover:text-purple-400 transition-all px-4 py-2" data-translate="nav-contact">Contact</a>
         </nav>
     </div>
 
     <!-- Hero Section -->
-    <section id="home" class="hero-gradient min-h-screen flex items-center justify-center px-4 pt-20 pb-16 relative overflow-hidden">
+    <section id="home" class="hero-gradient min-h-screen flex items-center justify-center px-4 pt-24 pb-16 relative overflow-hidden">
         <div class="absolute inset-0 opacity-10">
             <div class="absolute top-1/4 left-1/4 w-64 h-64 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
             <div class="absolute top-1/3 right-1/4 w-64 h-64 bg-pink-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
             <div class="absolute bottom-1/4 left-1/2 w-64 h-64 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
         </div>
         
-        <div class="max-w-4xl mx-auto text-center relative z-10 fade-in mt-10">
-            <h3 class="hero-heading" style="
-    font-size: 3.5rem;
-    font-weight: 800;
-    margin-bottom: 1rem;
-    background: linear-gradient(45deg, #4f46e5, #10b981, #ec4899);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    display: inline-block;
-">H3RO</h3><h1 class="text-4xl md:text-6xl font-bold text-white mb-4 md:mb-6" data-translate="hero-title">
+        <div class="max-w-5xl mx-auto text-center relative z-10 fade-in mt-10">
+            <div class="mb-8 slide-in-left">
+                <h3 class="hero-heading" style="
+                    font-size: 4rem;
+                    font-weight: 800;
+                    margin-bottom: 1rem;
+                    background: linear-gradient(45deg, #4f46e5, #10b981, #ec4899);
+                    -webkit-background-clip: text;
+                    background-clip: text;
+                    color: transparent;
+                    display: inline-block;
+                    letter-spacing: -0.05em;
+                ">H3RO</h3>
+            </div>
+            <h1 class="text-5xl md:text-7xl font-bold text-white mb-6 md:mb-8 tracking-tight slide-in-right" data-translate="hero-title">
                 <span class="heading-gradient">Digital Innovation</span> Studio
             </h1>
-            <h2 class="text-lg md:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto leading-relaxed px-4" data-translate="hero-subtitle">
+            <h2 class="text-xl md:text-2xl text-gray-300 mb-10 max-w-3xl mx-auto leading-relaxed px-4 text-secondary" data-translate="hero-subtitle">
                 We blend design, technology and architecture to create transformative digital experiences.
             </h2>
-            <div class="flex flex-col sm:flex-row justify-center space-y-3 sm:space-y-0 sm:space-x-4 px-4">
-                <a href="#contact" class="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-6 py-3 rounded-full font-medium hover:shadow-lg transition-all duration-300 transform hover:scale-105 text-sm md:text-base" data-translate="hero-cta">
-                    Let's Work Together
+            <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6 px-4">
+                <a href="#contact" class="relative overflow-hidden bg-gradient-to-r from-purple-500 to-pink-500 text-white px-8 py-4 rounded-full font-medium hover:shadow-xl transition-all duration-300 transform hover:scale-105 text-sm md:text-base glow-on-hover group">
+                    <span class="relative z-10" data-translate="hero-cta">Let's Work Together</span>
+                    <span class="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
                 </a>
-                <a href="#services" class="border border-white text-white px-6 py-3 rounded-full font-medium hover:bg-white hover:text-gray-900 transition text-sm md:text-base" data-translate="hero-services">
-                    Our Services
+                <a href="#services" class="border-2 border-white/30 text-white px-8 py-4 rounded-full font-medium hover:bg-white/10 transition-all duration-300 transform hover:scale-105 text-sm md:text-base glow-on-hover">
+                    <span data-translate="hero-services">Our Services</span>
                 </a>
             </div>
         </div>
         
         <div class="absolute bottom-10 left-0 right-0 flex justify-center">
             <a href="#why" class="text-white animate-bounce">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
                 </svg>
             </a>
@@ -160,42 +252,42 @@
     </section>
 
     <!-- Why Choose Us -->
-    <section id="why" class="py-16 px-4 bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-800">
-        <div class="max-w-6xl mx-auto">
-            <div class="text-center mb-12 fade-in">
-                <h2 class="text-3xl md:text-4xl font-bold mb-4" data-translate="why-title">Why Choose <span class="heading-gradient">H3RO</span></h2>
-                <p class="text-base md:text-lg text-gray-600 dark:text-gray-400 max-w-3xl mx-auto px-4" data-translate="why-subtitle">
+    <section id="why" class="py-24 px-6 bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-800">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-4xl md:text-5xl font-bold mb-6 tracking-tight" data-translate="why-title">Why Choose <span class="heading-gradient">H3RO</span></h2>
+                <p class="text-lg md:text-xl text-gray-600 dark:text-gray-400 max-w-4xl mx-auto px-4 text-secondary" data-translate="why-subtitle">
                     We're not just another agency. We're a multidisciplinary team focused on delivering the best exceptional results.
                 </p>
             </div>
             
-            <div class="grid md:grid-cols-3 gap-6 px-4">
-                <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg card-hover fade-in">
-                    <div class="w-12 h-12 bg-purple-100 dark:bg-purple-900/30 rounded-full flex items-center justify-center mb-4">
-                        <i class="fas fa-bolt text-purple-500 text-lg"></i>
+            <div class="grid md:grid-cols-3 gap-8 px-4">
+                <div class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-xl card-hover fade-in gradient-border">
+                    <div class="w-14 h-14 bg-purple-100 dark:bg-purple-900/30 rounded-2xl flex items-center justify-center mb-6">
+                        <i class="fas fa-rocket text-purple-500 dark:text-purple-400 text-xl"></i>
                     </div>
-                    <h3 class="text-xl font-bold mb-3 heading-gradient" data-translate="why-card1-title">Cutting-Edge Solutions</h3>
-                    <p class="text-gray-600 dark:text-gray-400 text-sm md:text-base" data-translate="why-card1-desc">
+                    <h3 class="text-2xl font-bold mb-4 heading-gradient" data-translate="why-card1-title">Cutting-Edge Solutions</h3>
+                    <p class="text-gray-600 dark:text-gray-400 text-base md:text-lg text-secondary" data-translate="why-card1-desc">
                         We stay ahead of the curve by implementing the latest technologies and innovative approaches in all of our projects.
                     </p>
                 </div>
                 
-                <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg card-hover fade-in" style="transition-delay: 100ms">
-                    <div class="w-12 h-12 bg-pink-100 dark:bg-pink-900/30 rounded-full flex items-center justify-center mb-4">
-                        <i class="fas fa-shapes text-pink-500 text-lg"></i>
+                <div class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-xl card-hover fade-in gradient-border" style="transition-delay: 100ms">
+                    <div class="w-14 h-14 bg-pink-100 dark:bg-pink-900/30 rounded-2xl flex items-center justify-center mb-6">
+                        <i class="fas fa-layer-group text-pink-500 dark:text-pink-400 text-xl"></i>
                     </div>
-                    <h3 class="text-xl font-bold mb-3 heading-gradient" data-translate="why-card2-title">Multidisciplinary Expertise</h3>
-                    <p class="text-gray-600 dark:text-gray-400 text-sm md:text-base" data-translate="why-card2-desc">
+                    <h3 class="text-2xl font-bold mb-4 heading-gradient" data-translate="why-card2-title">Multidisciplinary Expertise</h3>
+                    <p class="text-gray-600 dark:text-gray-400 text-base md:text-lg text-secondary" data-translate="why-card2-desc">
                         From digital design to architectural visualization, our diverse skillset allows us to handle complex projects with ease.
                     </p>
                 </div>
                 
-                <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg card-hover fade-in" style="transition-delay: 200ms">
-                    <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center mb-4">
-                        <i class="fas fa-user-tie text-blue-500 text-lg"></i>
+                <div class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-xl card-hover fade-in gradient-border" style="transition-delay: 200ms">
+                    <div class="w-14 h-14 bg-blue-100 dark:bg-blue-900/30 rounded-2xl flex items-center justify-center mb-6">
+                        <i class="fas fa-users text-blue-500 dark:text-blue-400 text-xl"></i>
                     </div>
-                    <h3 class="text-xl font-bold mb-3 heading-gradient" data-translate="why-card3-title">Client-Focused Approach</h3>
-                    <p class="text-gray-600 dark:text-gray-400 text-sm md:text-base" data-translate="why-card3-desc">
+                    <h3 class="text-2xl font-bold mb-4 heading-gradient" data-translate="why-card3-title">Client-Focused Approach</h3>
+                    <p class="text-gray-600 dark:text-gray-400 text-base md:text-lg text-secondary" data-translate="why-card3-desc">
                         Your goals become our mission. We work closely with you to understand your vision and deliver beyond your expectations.
                     </p>
                 </div>
@@ -204,109 +296,109 @@
     </section>
 
     <!-- Services -->
-    <section id="services" class="py-16 px-4 bg-white dark:bg-gray-800">
-        <div class="max-w-6xl mx-auto">
-            <div class="text-center mb-12 fade-in">
-                <h2 class="text-3xl md:text-4xl font-bold mb-4" data-translate="services-title">Our <span class="heading-gradient">Services</span></h2>
-                <p class="text-base md:text-lg text-gray-600 dark:text-gray-400 max-w-3xl mx-auto px-4" data-translate="services-subtitle">
+    <section id="services" class="py-24 px-6 bg-white dark:bg-gray-800">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-4xl md:text-5xl font-bold mb-6 tracking-tight" data-translate="services-title">Our <span class="heading-gradient">Services</span></h2>
+                <p class="text-lg md:text-xl text-gray-600 dark:text-gray-400 max-w-4xl mx-auto px-4 text-secondary" data-translate="services-subtitle">
                     Comprehensive solutions tailored to your digital and creative needs.
                 </p>
             </div>
             
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 px-4">
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 px-4">
                 <!-- Web Design & Development -->
-                <div class="bg-gray-50 dark:bg-gray-700 p-6 rounded-xl shadow-md card-hover fade-in">
-                    <div class="w-12 h-12 bg-purple-100 dark:bg-purple-900/30 rounded-full flex items-center justify-center mb-4">
-                        <i class="fas fa-code text-purple-500"></i>
+                <div class="bg-gray-50 dark:bg-gray-700 p-8 rounded-2xl shadow-lg card-hover fade-in gradient-border">
+                    <div class="w-14 h-14 bg-purple-100 dark:bg-purple-900/30 rounded-2xl flex items-center justify-center mb-6">
+                        <i class="fas fa-code text-purple-500 dark:text-purple-400 text-xl"></i>
                     </div>
-                    <h3 class="text-xl font-bold mb-2 heading-gradient" data-translate="service1-title">Web Design & Development</h3>
-                    <p class="text-gray-600 dark:text-gray-400 text-sm md:text-base mb-4" data-translate="service1-desc">
-                        Custom websites and web applications designed for performance, user experience, and conversion to grow your business .
+                    <h3 class="text-2xl font-bold mb-4 heading-gradient" data-translate="service1-title">Web Design & Development</h3>
+                    <p class="text-gray-600 dark:text-gray-400 text-base md:text-lg mb-6 text-secondary" data-translate="service1-desc">
+                        Custom websites and web applications designed for performance, user experience, and conversion to grow your business.
                     </p>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="text-xs bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-300 px-2 py-1 rounded-full">React</span>
-                        <span class="text-xs bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-300 px-2 py-1 rounded-full">Tailwind</span>
-                        <span class="text-xs bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-300 px-2 py-1 rounded-full">WordPress</span>
+                    <div class="flex flex-wrap gap-3">
+                        <span class="text-xs bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-300 px-3 py-1.5 rounded-full">React</span>
+                        <span class="text-xs bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-300 px-3 py-1.5 rounded-full">Tailwind</span>
+                        <span class="text-xs bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-300 px-3 py-1.5 rounded-full">WordPress</span>
                     </div>
                 </div>
                 
                 <!-- Architectural Design -->
-                <div class="bg-gray-50 dark:bg-gray-700 p-6 rounded-xl shadow-md card-hover fade-in" style="transition-delay: 100ms">
-                    <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center mb-4">
-                        <i class="fas fa-building text-blue-500"></i>
+                <div class="bg-gray-50 dark:bg-gray-700 p-8 rounded-2xl shadow-lg card-hover fade-in gradient-border" style="transition-delay: 100ms">
+                    <div class="w-14 h-14 bg-blue-100 dark:bg-blue-900/30 rounded-2xl flex items-center justify-center mb-6">
+                        <i class="fas fa-building text-blue-500 dark:text-blue-400 text-xl"></i>
                     </div>
-                    <h3 class="text-xl font-bold mb-2 heading-gradient" data-translate="service2-title">Architectural Design</h3>
-                    <p class="text-gray-600 dark:text-gray-400 text-sm md:text-base mb-4" data-translate="service2-desc">
+                    <h3 class="text-2xl font-bold mb-4 heading-gradient" data-translate="service2-title">Architectural Design</h3>
+                    <p class="text-gray-600 dark:text-gray-400 text-base md:text-lg mb-6 text-secondary" data-translate="service2-desc">
                         Innovative architectural solutions combining aesthetics, functionality and sustainability.
                     </p>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="text-xs bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 px-2 py-1 rounded-full">Residential</span>
-                        <span class="text-xs bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 px-2 py-1 rounded-full">Commercial</span>
-                        <span class="text-xs bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 px-2 py-1 rounded-full">Interior</span>
+                    <div class="flex flex-wrap gap-3">
+                        <span class="text-xs bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 px-3 py-1.5 rounded-full">Residential</span>
+                        <span class="text-xs bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 px-3 py-1.5 rounded-full">Commercial</span>
+                        <span class="text-xs bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 px-3 py-1.5 rounded-full">Interior</span>
                     </div>
                 </div>
                 
                 <!-- 3D Visualization -->
-                <div class="bg-gray-50 dark:bg-gray-700 p-6 rounded-xl shadow-md card-hover fade-in" style="transition-delay: 200ms">
-                    <div class="w-12 h-12 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mb-4">
-                        <i class="fas fa-cube text-green-500"></i>
+                <div class="bg-gray-50 dark:bg-gray-700 p-8 rounded-2xl shadow-lg card-hover fade-in gradient-border" style="transition-delay: 200ms">
+                    <div class="w-14 h-14 bg-green-100 dark:bg-green-900/30 rounded-2xl flex items-center justify-center mb-6">
+                        <i class="fas fa-cube text-green-500 dark:text-green-400 text-xl"></i>
                     </div>
-                    <h3 class="text-xl font-bold mb-2 heading-gradient" data-translate="service3-title">3D Visualization & Modeling</h3>
-                    <p class="text-gray-600 dark:text-gray-400 text-sm md:text-base mb-4" data-translate="service3-desc">
-                        Cool renders also Photorealistic visuals and 3D models that bring your architectural designs to life before construction.
+                    <h3 class="text-2xl font-bold mb-4 heading-gradient" data-translate="service3-title">3D Visualization & Modeling</h3>
+                    <p class="text-gray-600 dark:text-gray-400 text-base md:text-lg mb-6 text-secondary" data-translate="service3-desc">
+                        Photorealistic visuals and 3D models that bring your architectural designs to life before construction.
                     </p>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="text-xs bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300 px-2 py-1 rounded-full">3DS Max</span>
-                        <span class="text-xs bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300 px-2 py-1 rounded-full">V-Ray</span>
-                        <span class="text-xs bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300 px-2 py-1 rounded-full">Blender</span>
+                    <div class="flex flex-wrap gap-3">
+                        <span class="text-xs bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300 px-3 py-1.5 rounded-full">3DS Max</span>
+                        <span class="text-xs bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300 px-3 py-1.5 rounded-full">V-Ray</span>
+                        <span class="text-xs bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300 px-3 py-1.5 rounded-full">Blender</span>
                     </div>
                 </div>
                 
                 <!-- Social Media Management -->
-                <div class="bg-gray-50 dark:bg-gray-700 p-6 rounded-xl shadow-md card-hover fade-in">
-                    <div class="w-12 h-12 bg-pink-100 dark:bg-pink-900/30 rounded-full flex items-center justify-center mb-4">
-                        <i class="fas fa-hashtag text-pink-500"></i>
+                <div class="bg-gray-50 dark:bg-gray-700 p-8 rounded-2xl shadow-lg card-hover fade-in gradient-border">
+                    <div class="w-14 h-14 bg-pink-100 dark:bg-pink-900/30 rounded-2xl flex items-center justify-center mb-6">
+                        <i class="fas fa-hashtag text-pink-500 dark:text-pink-400 text-xl"></i>
                     </div>
-                    <h3 class="text-xl font-bold mb-2 heading-gradient" data-translate="service4-title">Social Media Management</h3>
-                    <p class="text-gray-600 dark:text-gray-400 text-sm md:text-base mb-4" data-translate="service4-desc">
+                    <h3 class="text-2xl font-bold mb-4 heading-gradient" data-translate="service4-title">Social Media Management</h3>
+                    <p class="text-gray-600 dark:text-gray-400 text-base md:text-lg mb-6 text-secondary" data-translate="service4-desc">
                         Strategic content creation and management to grow your brand's online presence and engagement.
                     </p>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="text-xs bg-pink-100 dark:bg-pink-900/30 text-pink-800 dark:text-pink-300 px-2 py-1 rounded-full">Content</span>
-                        <span class="text-xs bg-pink-100 dark:bg-pink-900/30 text-pink-800 dark:text-pink-300 px-2 py-1 rounded-full">Strategy</span>
-                        <span class="text-xs bg-pink-100 dark:bg-pink-900/30 text-pink-800 dark:text-pink-300 px-2 py-1 rounded-full">Analytics</span>
+                    <div class="flex flex-wrap gap-3">
+                        <span class="text-xs bg-pink-100 dark:bg-pink-900/30 text-pink-800 dark:text-pink-300 px-3 py-1.5 rounded-full">Content</span>
+                        <span class="text-xs bg-pink-100 dark:bg-pink-900/30 text-pink-800 dark:text-pink-300 px-3 py-1.5 rounded-full">Strategy</span>
+                        <span class="text-xs bg-pink-100 dark:bg-pink-900/30 text-pink-800 dark:text-pink-300 px-3 py-1.5 rounded-full">Analytics</span>
                     </div>
                 </div>
                 
                 <!-- Video Editing -->
-                <div class="bg-gray-50 dark:bg-gray-700 p-6 rounded-xl shadow-md card-hover fade-in" style="transition-delay: 100ms">
-                    <div class="w-12 h-12 bg-red-100 dark:bg-red-900/30 rounded-full flex items-center justify-center mb-4">
-                        <i class="fas fa-video text-red-500"></i>
+                <div class="bg-gray-50 dark:bg-gray-700 p-8 rounded-2xl shadow-lg card-hover fade-in gradient-border" style="transition-delay: 100ms">
+                    <div class="w-14 h-14 bg-red-100 dark:bg-red-900/30 rounded-2xl flex items-center justify-center mb-6">
+                        <i class="fas fa-video text-red-500 dark:text-red-400 text-xl"></i>
                     </div>
-                    <h3 class="text-xl font-bold mb-2 heading-gradient" data-translate="service5-title">Video Editing</h3>
-                    <p class="text-gray-600 dark:text-gray-400 text-sm md:text-base mb-4" data-translate="service5-desc">
+                    <h3 class="text-2xl font-bold mb-4 heading-gradient" data-translate="service5-title">Video Editing</h3>
+                    <p class="text-gray-600 dark:text-gray-400 text-base md:text-lg mb-6 text-secondary" data-translate="service5-desc">
                         Professional video editing services for commercials, social media content, and promotional videos.
                     </p>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="text-xs bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-300 px-2 py-1 rounded-full">Premiere Pro</span>
-                        <span class="text-xs bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-300 px-2 py-1 rounded-full">After Effects</span>
-                        <span class="text-xs bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-300 px-2 py-1 rounded-full">DaVinci</span>
+                    <div class="flex flex-wrap gap-3">
+                        <span class="text-xs bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-300 px-3 py-1.5 rounded-full">Premiere Pro</span>
+                        <span class="text-xs bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-300 px-3 py-1.5 rounded-full">After Effects</span>
+                        <span class="text-xs bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-300 px-3 py-1.5 rounded-full">DaVinci</span>
                     </div>
                 </div>
                 
                 <!-- Music Production -->
-                <div class="bg-gray-50 dark:bg-gray-700 p-6 rounded-xl shadow-md card-hover fade-in" style="transition-delay: 200ms">
-                    <div class="w-12 h-12 bg-yellow-100 dark:bg-yellow-900/30 rounded-full flex items-center justify-center mb-4">
-                        <i class="fas fa-music text-yellow-500"></i>
+                <div class="bg-gray-50 dark:bg-gray-700 p-8 rounded-2xl shadow-lg card-hover fade-in gradient-border" style="transition-delay: 200ms">
+                    <div class="w-14 h-14 bg-yellow-100 dark:bg-yellow-900/30 rounded-2xl flex items-center justify-center mb-6">
+                        <i class="fas fa-music text-yellow-500 dark:text-yellow-400 text-xl"></i>
                     </div>
-                    <h3 class="text-xl font-bold mb-2 heading-gradient" data-translate="service6-title">Music Production</h3>
-                    <p class="text-gray-600 dark:text-gray-400 text-sm md:text-base mb-4" data-translate="service6-desc">
+                    <h3 class="text-2xl font-bold mb-4 heading-gradient" data-translate="service6-title">Music Production</h3>
+                    <p class="text-gray-600 dark:text-gray-400 text-base md:text-lg mb-6 text-secondary" data-translate="service6-desc">
                         High-quality music production for commercials, films, and personal projects.
                     </p>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="text-xs bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-300 px-2 py-1 rounded-full">FL Studio</span>
-                        <span class="text-xs bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-300 px-2 py-1 rounded-full">Logic Pro</span>
-                        <span class="text-xs bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-300 px-2 py-1 rounded-full">Mixing</span>
+                    <div class="flex flex-wrap gap-3">
+                        <span class="text-xs bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-300 px-3 py-1.5 rounded-full">FL Studio</span>
+                        <span class="text-xs bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-300 px-3 py-1.5 rounded-full">Logic Pro</span>
+                        <span class="text-xs bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-300 px-3 py-1.5 rounded-full">Mixing</span>
                     </div>
                 </div>
             </div>
@@ -314,79 +406,79 @@
     </section>
 
     <!-- Portfolio -->
-    <section id="portfolio" class="py-16 px-4 bg-gray-50 dark:bg-gray-900">
-        <div class="max-w-6xl mx-auto">
-            <div class="text-center mb-12 fade-in">
-                <h2 class="text-3xl md:text-4xl font-bold mb-4" data-translate="portfolio-title">Selected <span class="heading-gradient">Projects</span></h2>
-                <p class="text-base md:text-lg text-gray-600 dark:text-gray-400 max-w-3xl mx-auto px-4" data-translate="portfolio-subtitle">
+    <section id="portfolio" class="py-24 px-6 bg-gray-50 dark:bg-gray-900">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-4xl md:text-5xl font-bold mb-6 tracking-tight" data-translate="portfolio-title">Selected <span class="heading-gradient">Projects</span></h2>
+                <p class="text-lg md:text-xl text-gray-600 dark:text-gray-400 max-w-4xl mx-auto px-4 text-secondary" data-translate="portfolio-subtitle">
                     A showcase of our recent work across different disciplines.
                 </p>
             </div>
             
-            <div class="grid md:grid-cols-3 gap-6 px-4">
+            <div class="grid md:grid-cols-3 gap-8 px-4">
                 <!-- Project 1 -->
-                <div class="group relative overflow-hidden rounded-xl shadow-lg fade-in">
-                    <div class="overflow-hidden h-64">
-                        <img src="https://i.imgur.com/MCcPuiT.jpeg" alt="My Image" class="w-full max-w-md mx-auto rounded-lg shadow-md">
-                             alt="3D Architectural Visualization" 
-                             class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
-                    </div>
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent flex items-end p-6">
+                <div class="relative rounded-2xl shadow-xl fade-in h-96">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent z-10 flex items-end p-8">
                         <div>
-                            <h3 class="text-xl font-bold text-white mb-1" data-translate="project1-title">Oceanview Residence</h3>
-                            <p class="text-gray-300 mb-4" data-translate="project1-type">3D Architectural Visualization</p>
-                            <a href="https://instagram.com/h3ro.tz" target="_blank" class="text-white hover:text-purple-300 flex items-center transition" data-translate="view-more">
+                            <h3 class="text-2xl font-bold text-white mb-2" data-translate="project1-title">General store</h3>
+                            <p class="text-gray-300 mb-6" data-translate="project1-type">3D Architectural Visualization</p>
+                            <a href="https://instagram.com/h3ro.tz" target="_blank" class="text-white hover:text-purple-300 flex items-center underline">
                                 View more <i class="fas fa-arrow-right ml-2"></i>
                             </a>
                         </div>
                     </div>
+                    <img 
+                        src="https://i.imgur.com/ctID09G.jpeg" 
+                        alt="3D Architectural Visualization" 
+                        class="w-full h-full object-cover"
+                    >
                 </div>
                 
                 <!-- Project 2 -->
-                <div class="group relative overflow-hidden rounded-xl shadow-lg fade-in" style="transition-delay: 100ms">
-                    <div class="overflow-hidden h-64">
-                        <img src="https://images.unsplash.com/photo-1648737963502-020357a4f2e7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" 
-                             alt="Website Design" 
-                             class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
-                    </div>
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent flex items-end p-6">
+                <div class="relative rounded-2xl shadow-xl fade-in h-96" style="transition-delay: 100ms">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent z-10 flex items-end p-8">
                         <div>
-                            <h3 class="text-xl font-bold text-white mb-1" data-translate="project2-title">FinTech Dashboard</h3>
-                            <p class="text-gray-300 mb-4" data-translate="project2-type">Web Application</p>
-                            <a href="https://instagram.com/h3ro.tz" target="_blank" class="text-white hover:text-purple-300 flex items-center transition" data-translate="view-more">
+                            <h3 class="text-2xl font-bold text-white mb-2" data-translate="project2-title">FinTech Dashboard</h3>
+                            <p class="text-gray-300 mb-6" data-translate="project2-type">Web Application</p>
+                            <a href="https://instagram.com/h3ro.tz" target="_blank" class="text-white hover:text-purple-300 flex items-center underline">
                                 View more <i class="fas fa-arrow-right ml-2"></i>
                             </a>
                         </div>
                     </div>
+                    <img 
+                        src="https://i.imgur.com/JNK2Cxw.jpg" 
+                        alt="Website Design" 
+                        class="w-full h-full object-cover"
+                    >
                 </div>
                 
                 <!-- Project 3 -->
-                <div class="group relative overflow-hidden rounded-xl shadow-lg fade-in" style="transition-delay: 200ms">
-                    <div class="overflow-hidden h-64">
-                        <img src="https://images.unsplash.com/photo-1593508512255-86ab42a8e620?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1178&q=80" 
-                             alt="Music Production" 
-                             class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
-                    </div>
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent flex items-end p-6">
+                <div class="relative rounded-2xl shadow-xl fade-in h-96" style="transition-delay: 200ms">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent z-10 flex items-end p-8">
                         <div>
-                            <h3 class="text-xl font-bold text-white mb-1" data-translate="project3-title">Urban Beats EP</h3>
-                            <p class="text-gray-300 mb-4" data-translate="project3-type">Music Production</p>
-                            <a href="https://instagram.com/h3ro.tz" target="_blank" class="text-white hover:text-purple-300 flex items-center transition" data-translate="view-more">
+                            <h3 class="text-2xl font-bold text-white mb-2" data-translate="project3-title">Urban Beats EP</h3>
+                            <p class="text-gray-300 mb-6" data-translate="project3-type">Music Production</p>
+                            <a href="https://instagram.com/h3ro.tz" target="_blank" class="text-white hover:text-purple-300 flex items-center underline">
                                 View more <i class="fas fa-arrow-right ml-2"></i>
                             </a>
                         </div>
                     </div>
+                    <img 
+                        src="https://images.unsplash.com/photo-1593508512255-86ab42a8e620?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1178&q=80" 
+                        alt="Music Production" 
+                        class="w-full h-full object-cover"
+                    >
                 </div>
             </div>
             
-            <div class="text-center mt-10 fade-in">
-                <div class="flex flex-col sm:flex-row justify-center gap-4 px-4">
-                    <a href="https://instagram.com/h3ro.tz" target="_blank" class="inline-flex items-center justify-center bg-white dark:bg-gray-800 px-6 py-3 rounded-full font-medium text-gray-900 dark:text-white hover:shadow-lg transition-all duration-300 border border-gray-200 dark:border-gray-700">
-                        <i class="fab fa-instagram mr-2"></i>
+            <div class="text-center mt-16 fade-in">
+                <div class="flex flex-col sm:flex-row justify-center gap-6 px-4">
+                    <a href="https://instagram.com/h3ro.tz" target="_blank" class="inline-flex items-center justify-center bg-white dark:bg-gray-800 px-8 py-4 rounded-full font-medium text-gray-900 dark:text-white hover:shadow-lg transition-all duration-300 border-2 border-gray-200 dark:border-gray-700 hover:border-purple-400">
+                        <i class="fab fa-instagram mr-3 text-lg"></i>
                         <span data-translate="view-all">View on Instagram</span>
                     </a>
-                    <a href="https://tiktok.com/@h3ro.tz" target="_blank" class="inline-flex items-center justify-center bg-white dark:bg-gray-800 px-6 py-3 rounded-full font-medium text-gray-900 dark:text-white hover:shadow-lg transition-all duration-300 border border-gray-200 dark:border-gray-700">
-                        <i class="fab fa-tiktok mr-2"></i>
+                    <a href="https://tiktok.com/@h3ro.tz" target="_blank" class="inline-flex items-center justify-center bg-white dark:bg-gray-800 px-8 py-4 rounded-full font-medium text-gray-900 dark:text-white hover:shadow-lg transition-all duration-300 border-2 border-gray-200 dark:border-gray-700 hover:border-purple-400">
+                        <i class="fab fa-tiktok mr-3 text-lg"></i>
                         <span>View on TikTok</span>
                     </a>
                 </div>
@@ -395,76 +487,76 @@
     </section>
 
     <!-- Contact -->
-    <section id="contact" class="py-16 px-4 bg-white dark:bg-gray-800">
-        <div class="max-w-4xl mx-auto">
-            <div class="text-center mb-12 fade-in">
-                <h2 class="text-3xl md:text-4xl font-bold mb-4" data-translate="contact-title">Get In <span class="heading-gradient">Touch</span></h2>
-                <p class="text-base md:text-lg text-gray-600 dark:text-gray-400 max-w-3xl mx-auto px-4" data-translate="contact-subtitle">
+    <section id="contact" class="py-24 px-6 bg-white dark:bg-gray-800">
+        <div class="max-w-5xl mx-auto">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-4xl md:text-5xl font-bold mb-6 tracking-tight" data-translate="contact-title">Get In <span class="heading-gradient">Touch</span></h2>
+                <p class="text-lg md:text-xl text-gray-600 dark:text-gray-400 max-w-4xl mx-auto px-4 text-secondary" data-translate="contact-subtitle">
                     Ready to start your project? Reach out to us through these channels.
                 </p>
             </div>
             
-            <div class="grid sm:grid-cols-3 gap-6 text-center px-4">
-                <div class="bg-gray-50 dark:bg-gray-700 p-6 rounded-xl fade-in">
-                    <div class="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-full flex items-center justify-center mx-auto mb-4">
-                        <i class="fab fa-instagram text-xl"></i>
+            <div class="grid sm:grid-cols-3 gap-8 text-center px-4">
+                <div class="bg-gray-50 dark:bg-gray-700 p-8 rounded-2xl shadow-lg fade-in hover:shadow-xl transition-shadow">
+                    <div class="w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-2xl flex items-center justify-center mx-auto mb-6 animate-float">
+                        <i class="fab fa-instagram text-2xl"></i>
                     </div>
-                    <h3 class="text-lg font-semibold mb-2" data-translate="contact-instagram">Instagram</h3>
-                    <a href="https://instagram.com/h3ro.tz" target="_blank" class="text-purple-500 hover:text-purple-700 dark:hover:text-purple-400 text-sm md:text-base">
+                    <h3 class="text-xl font-semibold mb-4" data-translate="contact-instagram">Instagram</h3>
+                    <a href="https://instagram.com/h3ro.tz" target="_blank" class="text-purple-500 hover:text-purple-700 dark:hover:text-purple-400 text-base">
                         @h3ro.tz
                     </a>
                 </div>
                 
-                <div class="bg-gray-50 dark:bg-gray-700 p-6 rounded-xl fade-in" style="transition-delay: 100ms">
-                    <div class="w-12 h-12 bg-gradient-to-r from-green-500 to-teal-400 text-white rounded-full flex items-center justify-center mx-auto mb-4">
-                        <i class="fab fa-whatsapp text-xl"></i>
+                <div class="bg-gray-50 dark:bg-gray-700 p-8 rounded-2xl shadow-lg fade-in hover:shadow-xl transition-shadow" style="transition-delay: 100ms">
+                    <div class="w-16 h-16 bg-gradient-to-r from-green-500 to-teal-400 text-white rounded-2xl flex items-center justify-center mx-auto mb-6 animate-float" style="animation-delay: 0.5s">
+                        <i class="fab fa-whatsapp text-2xl"></i>
                     </div>
-                    <h3 class="text-lg font-semibold mb-2" data-translate="contact-whatsapp">WhatsApp</h3>
-                    <a href="https://wa.me/255719056174" target="_blank" class="text-green-600 hover:text-green-700 dark:hover:text-green-500 text-sm md:text-base">
+                    <h3 class="text-xl font-semibold mb-4" data-translate="contact-whatsapp">WhatsApp</h3>
+                    <a href="https://wa.me/255719056174" target="_blank" class="text-green-600 hover:text-green-700 dark:hover:text-green-500 text-base">
                         +255 719 056 174
                     </a>
                 </div>
                 
-                <div class="bg-gray-50 dark:bg-gray-700 p-6 rounded-xl fade-in" style="transition-delay: 200ms">
-                    <div class="w-12 h-12 bg-gradient-to-r from-blue-500 to-cyan-400 text-white rounded-full flex items-center justify-center mx-auto mb-4">
-                        <i class="fas fa-map-marker-alt text-xl"></i>
+                <div class="bg-gray-50 dark:bg-gray-700 p-8 rounded-2xl shadow-lg fade-in hover:shadow-xl transition-shadow" style="transition-delay: 200ms">
+                    <div class="w-16 h-16 bg-gradient-to-r from-blue-500 to-cyan-400 text-white rounded-2xl flex items-center justify-center mx-auto mb-6 animate-float" style="animation-delay: 1s">
+                        <i class="fas fa-map-marker-alt text-2xl"></i>
                     </div>
-                    <h3 class="text-lg font-semibold mb-2" data-translate="contact-location">Location</h3>
-                    <p class="text-gray-700 dark:text-gray-300 text-sm md:text-base" data-translate="contact-city">Dar es Salaam, Tanzania</p>
+                    <h3 class="text-xl font-semibold mb-4" data-translate="contact-location">Location</h3>
+                    <p class="text-gray-700 dark:text-gray-300 text-base" data-translate="contact-city">Dar es Salaam, Tanzania</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="bg-gray-900 text-gray-400 py-12 px-4">
-        <div class="max-w-6xl mx-auto">
+    <footer class="bg-gray-900 text-gray-400 py-16 px-6">
+        <div class="max-w-7xl mx-auto">
             <div class="flex flex-col md:flex-row justify-between items-center">
-                <div class="mb-6 md:mb-0 text-center md:text-left">
+                <div class="mb-8 md:mb-0 text-center md:text-left">
                     <a href="#" class="flex items-center justify-center md:justify-start">
-                        <span class="text-2xl font-bold text-white">H3RO</span>
-                        <span class="heading-gradient text-2xl font-bold ml-1">Studio</span>
+                        <span class="text-3xl font-bold text-white tracking-tighter">H3RO</span>
+                        <span class="heading-gradient text-3xl font-bold ml-2 tracking-tighter">Studio</span>
                     </a>
-                    <p class="mt-2 text-sm" data-translate="footer-tagline">Digital Innovation Studio</p>
+                    <p class="mt-3 text-sm text-secondary" data-translate="footer-tagline">Digital Innovation Studio</p>
                 </div>
                 
-                <div class="flex space-x-6 mb-6 md:mb-0">
-                    <a href="https://instagram.com/h3ro.tz" target="_blank" class="text-gray-400 hover:text-white transition">
-                        <i class="fab fa-instagram text-xl"></i>
+                <div class="flex space-x-8 mb-8 md:mb-0">
+                    <a href="https://instagram.com/h3ro.tz" target="_blank" class="text-gray-400 hover:text-white transition-all transform hover:scale-125">
+                        <i class="fab fa-instagram text-2xl"></i>
                     </a>
-                    <a href="https://tiktok.com/@h3ro.tz" target="_blank" class="text-gray-400 hover:text-white transition">
-                        <i class="fab fa-tiktok text-xl"></i>
+                    <a href="https://tiktok.com/@h3ro.tz" target="_blank" class="text-gray-400 hover:text-white transition-all transform hover:scale-125">
+                        <i class="fab fa-tiktok text-2xl"></i>
                     </a>
-                    <a href="https://wa.me/255719056174" target="_blank" class="text-gray-400 hover:text-white transition">
-                        <i class="fab fa-whatsapp text-xl"></i>
+                    <a href="https://wa.me/255719056174" target="_blank" class="text-gray-400 hover:text-white transition-all transform hover:scale-125">
+                        <i class="fab fa-whatsapp text-2xl"></i>
                     </a>
                 </div>
             </div>
             
-            <div class="border-t border-gray-800 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
-                <p class="text-sm mb-4 md:mb-0" data-translate="footer-copyright">&copy; 2025 H3RO Digital Innovation Studio. All rights reserved.</p>
+            <div class="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-sm mb-4 md:mb-0 text-secondary" data-translate="footer-copyright">&copy; 2025 H3RO Digital Innovation Studio. All rights reserved.</p>
                 <div class="flex items-center">
-                    <span class="text-xs bg-gray-800 text-gray-400 px-2 py-1 rounded-full">Arusha, Tanzania</span>
+                    <span class="text-xs bg-gray-800 text-gray-400 px-3 py-1.5 rounded-full">Arusha, Tanzania</span>
                 </div>
             </div>
         </div>
@@ -648,7 +740,7 @@
 
         // Scroll animation
         function checkVisibility() {
-            const elements = document.querySelectorAll('.fade-in');
+            const elements = document.querySelectorAll('.fade-in, .slide-in-left, .slide-in-right');
             
             elements.forEach(element => {
                 const elementTop = element.getBoundingClientRect().top;
